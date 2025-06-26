@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Incident</title>
+</head>
+<body>
+    <h1>Edit Incident</h1>
+    <form method="POST" action="{{ url_for('update_incident', incident_id=incident.id) }}">
+        <div>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" value="{{ incident.type }}" required><br><br>
+        </div>
+        <div>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ incident.location }}" required><br><br>
+        </div>
+        <button type="submit">Update Incident</button>
+    </form>
+    <p><a href="{{ url_for('incidents') }}">Back to Incidents</a></p>
+</body>
+</html>

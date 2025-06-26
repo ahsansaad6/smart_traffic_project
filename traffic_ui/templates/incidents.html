@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incidents</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            color: #dc3545; /* A shade of red for incidents */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        li strong {
+            font-weight: bold;
+            color: #555;
+            margin-right: 5px;
+        }
+
+        li a {
+            color: #007bff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        li form {
+            display: inline;
+            margin-left: 10px;
+        }
+
+        li form input[type="submit"] {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        li form input[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+        p {
+            margin-top: 15px;
+        }
+
+        p a {
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #e9f2ff;
+            margin-right: 10px;
+        }
+
+        p a:hover {
+            background-color: #d4e6ff;
+        }
+
+        .no-incidents {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incidents</h1>
+    {% if incident_data %}
+    <ul>
+        {% for incident in incident_data %}
+        <li>
+            <div>
+                <strong>ID:</strong> {{ incident.id }},
+                <strong>Type:</strong> {{ incident.type }},
+                <strong>Location:</strong> {{ incident.location }},
+                <strong>Timestamp:</strong> {{ incident.timestamp }}
+            </div>
+            <div>
+                <a href="{{ url_for('edit_incident', incident_id=incident.id) }}">Edit</a>
+                <form method="POST" action="{{ url_for('delete_incident', incident_id=incident.id) }}" style="display: inline;">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-incidents">No incidents reported yet.</p>
+    {% endif %}
+    <p>
+        <a href="{{ url_for('list_zones') }}">Back to Traffic Zones</a>
+        <a href="{{ url_for('report_incident') }}">Report New Incident</a>
+    </p>
+</body>
+</html>
